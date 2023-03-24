@@ -1,25 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { AppBar } from "./components/AppBar";
+import { Home } from "./routes/Home";
+import { Routes, BrowserRouter, Route } from "react-router-dom";
+import { NewNote } from "./routes/NewNote";
+import { ViewNotePad } from "./routes/ViewNotePad";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <AppBar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+
+        <Route path="/new" element={<NewNote />} />
+
+        <Route path="/notepad/:id" element={<ViewNotePad />} />
+      </Routes>
+      <footer className="flex justify-center items-center py-2 text-sm bg-gray-300 shadow-2xl text-white">
+        Projeto desenvolvido utilizando ReactJS
+      </footer>
+    </BrowserRouter>
   );
 }
 
