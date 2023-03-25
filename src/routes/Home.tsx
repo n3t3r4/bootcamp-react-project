@@ -23,7 +23,9 @@ export function Home() {
               Notas
             </div>
           </div>
-          <NoteList notepads={notepads} />
+          <div className="max-h-screen overflow-scroll">
+            <NoteList notepads={notepads} />
+          </div>
         </div>
         <Link to="/new">
           <div className="bg-slate-50 rounded m-5 py-5 w-80 h-[92%] flex justify-center items-center">

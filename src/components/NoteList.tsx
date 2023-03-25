@@ -21,12 +21,16 @@ export function NoteList({ notepads }: NotePadProps) {
           return (
             <>
               <Link to={"/notepad/" + note.id}>
-                <div className="p-5 border-solid border-white border-b-2">
-                  <li key={note.id}>
-                    <h2>{note.title}</h2>
-                    <h4>{note.subtitle}</h4>
-                    <p>{note.content}</p>
-                    <span>{note.created_at}</span>
+                <div
+                  key={note.id}
+                  className="p-5 border-solid border-white border-b-2"
+                >
+                  <li>
+                    <span className="font-extralight text-sm"># {note.id}</span>
+                    <h2 className="font-bold">{note.title}</h2>
+                    <h4 className="text-sm">{note.subtitle}</h4>
+                    {/*                     <p>{note.content}</p>
+                    <span>{note.created_at}</span> */}
                   </li>
                 </div>
               </Link>
