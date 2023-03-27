@@ -6,19 +6,22 @@ import { getNotes } from "../components/GetNotes";
 import { InputText } from "../components/InputText";
 import { NoteList, NotePad } from "../components/NoteList";
 
-type newNoteProps = {
-  title: "";
-  subtitle: "";
-  content: "";
+const newNote = {
+  title: "",
+  subtitle: "",
+  content: "",
 };
 
 export function NewNote() {
   getNotes();
   const initialNotes: NotePad[] = [];
   const [notepads, updateNotePads] = useState(initialNotes);
-  const [content, updateContent] = useState("");
+
+  /*   const [content, updateContent] = useState("");
   const [title, updateTitle] = useState("");
-  const [subtitle, updateSubtitle] = useState("");
+  const [subtitle, updateSubtitle] = useState(""); */
+
+  const [form, updateForm] = useState(newNote);
 
   useEffect(() => {
     getNotes().then((notepads) => {
@@ -48,9 +51,35 @@ export function NewNote() {
           </div>
         </Link>
         <div className="bg-slate-50 rounded m-5 py-5 w-[90%] h-auto flex sm:w-full justify-between">
-          {/* <InputText placeholder="Digite sua mensagem" /> */}
           <div>
-            <input
+            <InputText
+              className="bg-slate-50 resize-none w-full h-[5%] mx-[1rem] py-1 outline-none"
+              placeholder="digite aqui o titulo"
+              value={form.title}
+              onChange={(title) => {
+                updateForm({ ...form, title });
+              }}
+            />
+
+            <InputText
+              className="bg-slate-50 resize-none w-full h-[5%] mx-[1rem] py-1 outline-none"
+              placeholder="digite aqui o subtitulo"
+              value={form.subtitle}
+              onChange={(subtitle) => {
+                updateForm({ ...form, subtitle });
+              }}
+            />
+
+            <InputText
+              className="bg-slate-50 resize-none w-full h-[20%] mx-[1rem]  outline-none"
+              placeholder="digite aqui o conteúdo"
+              value={form.content}
+              onChange={(content) => {
+                updateForm({ ...form, content });
+              }}
+            />
+
+            {/* <input
               className="bg-slate-50 resize-none w-full h-[5%] mx-[1rem] py-1 outline-none"
               placeholder="digite aqui o título"
               onChange={(event) => {
@@ -74,27 +103,22 @@ export function NewNote() {
                 updateContent(event.target.value);
               }}
               value={content}
-            ></input>
+            ></input> */}
           </div>
           <div className="flex flex-col justify-end mx-10">
             <button
               className=" bg-gray-400 rounded-full px-4 pb-1 m-2 text-4xl flex justify-center items-center shadow-md"
-              onClick={() => {
-                api
-                  .post("/notepads", {
-                    title: `${title}`,
-                    subtitle: `${subtitle}`,
-                    content: `${content}`,
-                  })
-                  .then((data) => {
-                    if (data.status === 201) {
-                      toast("enviado com sucesso");
-                      redirect("/");
-                    } else {
-                      toast("erro ao enviar");
-                    }
-                    console.log(content);
-                  });
+              onClick={async (event) => {
+                event.preventDefault();
+                const post = await api.post("/notepads", form);
+
+                if (post.data.success) {
+                  toast("enviado com sucesso");
+                  redirect("/");
+                } else {
+                  toast("erro ao enviar");
+                }
+                /* console.log(post.data.success); */
               }}
             >
               <span>+</span>
