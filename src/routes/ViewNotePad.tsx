@@ -39,17 +39,16 @@ export function ViewNotePad() {
         <p className="text-sm bg-white px-2">{notepad.subtitle}</p>
         <p className="text-lg bg-white rounded py-5 px-2">{notepad.content}</p>
         <div className="flex flex-row gap-2">
-          <button className=" bg-gray-400 rounded-full py-1 px-4 my-2 text-sm flex justify-center items-center shadow-md">
-            Editar
-          </button>
+          <Link to={`/edit/` + notepad.id}>
+            <button className=" bg-gray-400 rounded-full py-1 px-4 my-2 text-sm flex justify-center items-center shadow-md">
+              Editar
+            </button>
+          </Link>
           <button
             className=" bg-red-400 rounded-full py-1 px-4 my-2 text-sm flex justify-center items-center shadow-md"
             onClick={async () => {
               const res = await api.delete(`/notepads/${notepad.id}`);
-              const deleteResponse = res.status;
-              console.log(deleteResponse);
-
-              if (deleteResponse === 200) {
+              if (res.data.success) {
                 toast("deletado com sucesso");
                 redirect("/");
               } else {
