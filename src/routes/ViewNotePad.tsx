@@ -19,7 +19,7 @@ export function ViewNotePad() {
     api.get(`/notepads/${noteId.id}`).then((conex) => {
       const notepad = conex.data;
       updateNotepad(notepad);
-      console.log(notepad);
+      /* console.log(notepad); */
     });
   }, []);
 

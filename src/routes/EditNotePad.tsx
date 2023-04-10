@@ -12,7 +12,7 @@ export function EditNotePad() {
     api.get(`/notepads/${noteId.id}`).then((conex) => {
       const notepad = conex.data;
       updateNotepad(notepad);
-      console.log(notepad);
+      /* console.log(notepad); */
     });
   }, []);
 
@@ -34,10 +34,8 @@ export function EditNotePad() {
             className=" bg-gray-400 rounded-full py-1 px-4 my-2 text-sm flex justify-center items-center shadow-md"
             onClick={async () => {
               const res = await api.put(`/notepads/${notepad.id}`, notepad);
-              const putResponse = res.status;
-              console.log(putResponse);
 
-              if (putResponse === 200) {
+              if (res.data.success) {
                 toast("alterado com sucesso");
                 redirect(`/notepad/` + notepad.id);
               } else {
